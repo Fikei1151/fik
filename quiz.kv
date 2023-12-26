@@ -1,0 +1,14 @@
+#:kivy 2.0
+<QuizScreen>:
+    orientation: 'vertical'
+    Label:
+        text: 'Question: 1 + 1 = ?'
+        font_size: '20sp'
+    Button:
+        text: '2'
+        on_press: root.check_answer(self)
+    Button:
+        text: '3'
+        on_press: root.check_answer(self)
+    Label:
+        id: result_label
