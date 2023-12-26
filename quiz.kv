@@ -1,14 +1,26 @@
-#:kivy 2.0
+#:kivy 2.2.1
+# quiz.kv
+
 <QuizScreen>:
-    orientation: 'vertical'
-    Label:
-        text: 'Question: 1 + 1 = ?'
-        font_size: '20sp'
-    Button:
-        text: '2'
-        on_press: root.check_answer(self)
-    Button:
-        text: '3'
-        on_press: root.check_answer(self)
-    Label:
-        id: result_label
+    question_label: question
+    result_label: result
+
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: question
+            text: ''
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                text: root.answer_buttons[0] if root.answer_buttons else ''
+                on_press: root.check_answer(self.text)
+            Button:
+                text: root.answer_buttons[1] if root.answer_buttons else ''
+                on_press: root.check_answer(self.text)
+            Button:
+                text: root.answer_buttons[2] if root.answer_buttons else ''
+                on_press: root.check_answer(self.text)
+        Label:
+            id: result
+            text: ''
