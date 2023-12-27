@@ -4,7 +4,6 @@
 <QuizScreen>:
     question_label: question
     result_label: result
-
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -23,4 +22,20 @@
                 on_press: root.check_answer(self.text)
         Label:
             id: result
+            text: ''
+        Label:
+            text: f"Score: {root.score}"
+        Label:
+            text: f"Time: {root.time_elapsed}"
+
+<ResultScreen>:
+    score_label: score
+    time_label: time
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: score
+            text: ''
+        Label:
+            id: time
             text: ''
