@@ -1,9 +1,9 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import ObjectProperty, ListProperty, NumericProperty
 from kivy.clock import Clock
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.button import Button
 
 class MainMenuScreen(BoxLayout):
     def __init__(self, **kwargs):
@@ -12,13 +12,20 @@ class MainMenuScreen(BoxLayout):
         self.add_widget(Button(text='Start Quiz', on_press=self.start_quiz))
         self.add_widget(Button(text='Settings', on_press=self.settings))
         self.add_widget(Button(text='Quit', on_press=self.quit))
+        self.bg_colors = [('white', [1, 1, 1, 1]), ('blue', [0, 0, 1, 1]), ('green', [0, 1, 0, 1])]
+        self.bg_color_index = 0
 
     def start_quiz(self, instance):
         App.get_running_app().screen_manager.current = 'quiz'
 
     def settings(self, instance):
-        # Logic for settings
-        pass
+        self.bg_color_index = (self.bg_color_index + 1) % len(self.bg_colors)
+        color_name, color_value = self.bg_colors[self.bg_color_index]
+        self.change_background_color(color_value)
+
+    def change_background_color(self, color):
+        for screen in App.get_running_app().screen_manager.screens:
+            screen.bg_color = color
 
     def quit(self, instance):
         App.get_running_app().stop()
@@ -89,7 +96,6 @@ class ResultScreen(BoxLayout):
 class QuizApp(App):
     def build(self):
         self.screen_manager = ScreenManager()
-
         # Initialize each screen only once
         if not hasattr(self, 'main_menu_screen'):
             self.main_menu_screen = Screen(name='main_menu')
