@@ -4,7 +4,26 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import ObjectProperty, ListProperty, NumericProperty
 from kivy.clock import Clock
+from kivy.uix.popup import Popup
+from kivy.uix.gridlayout import GridLayout
+class SettingsPopup(Popup):
+    def __init__(self, **kwargs):
+        super(SettingsPopup, self).__init__(**kwargs)
+        self.title = 'Settings'
+        self.size_hint = (None, None)
+        self.size = (400, 400)
 
+        layout = GridLayout(cols=2)
+        colors = [("White", [1, 1, 1, 1]), ("Red", [1, 0, 0, 1]), ("Green", [0, 1, 0, 1]), ("Blue", [0, 0, 1, 1]), ("Yellow", [1, 1, 0, 1])]
+        for color_name, color_value in colors:
+            btn = Button(text=color_name, on_press=lambda instance, c=color_value: self.change_bg_color(c))
+            layout.add_widget(btn)
+
+        self.add_widget(layout)
+
+    def change_bg_color(self, color):
+        App.get_running_app().change_bg_color(color)
+        self.dismiss()
 class MainMenuScreen(BoxLayout):
     def __init__(self, **kwargs):
         super(MainMenuScreen, self).__init__(**kwargs)
@@ -19,9 +38,8 @@ class MainMenuScreen(BoxLayout):
         App.get_running_app().screen_manager.current = 'quiz'
 
     def settings(self, instance):
-        self.bg_color_index = (self.bg_color_index + 1) % len(self.bg_colors)
-        color_name, color_value = self.bg_colors[self.bg_color_index]
-        self.change_background_color(color_value)
+        settings_popup = SettingsPopup()
+        settings_popup.open()
 
     def change_background_color(self, color):
         for screen in App.get_running_app().screen_manager.screens:
@@ -120,5 +138,8 @@ class QuizApp(App):
         result_screen_widget = self.result_screen.children[0]
         result_screen_widget.update_results(score, time)
         self.screen_manager.current = 'result'
+    def change_bg_color(self, color):
+        for screen in self.screen_manager.screens:
+            screen.bg_color = color    
 if __name__ == '__main__':
     QuizApp().run()
