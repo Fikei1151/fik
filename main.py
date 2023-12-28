@@ -17,7 +17,7 @@ class SettingsPopup(Popup):
         self.size = (400, 400)
 
         layout = GridLayout(cols=2)
-        colors = [("White", [1, 1, 1, 1]), ("Red", [1, 0, 0, 1]), ("Green", [0, 1, 0, 1]), ("Blue", [0, 0, 1, 1]), ("Yellow", [1, 1, 0, 1])]
+        colors = [ ("Red", [1, 0, 0, 1]), ("Green", [0, 1, 0, 1]), ("Blue", [0, 0, 1, 1]), ("Yellow", [1, 1, 0, 1])]
         for color_name, color_value in colors:
             btn = Button(text=color_name, on_press=lambda instance, c=color_value: self.change_bg_color(c))
             layout.add_widget(btn)
@@ -25,6 +25,7 @@ class SettingsPopup(Popup):
         self.add_widget(layout)
 
     def change_bg_color(self, color):
+        print("Changing color to:", color)  
         App.get_running_app().change_bg_color(color)
         self.dismiss()
 class MainMenuScreen(BoxLayout):
@@ -121,18 +122,16 @@ class ResultScreen(BoxLayout):
 class QuizApp(App):
     def build(self):
         self.screen_manager = ScreenManager()
-        # Initialize each screen only once
-        if not hasattr(self, 'main_menu_screen'):
-            self.main_menu_screen = Screen(name='main_menu')
-            self.main_menu_screen.add_widget(MainMenuScreen())
 
-        if not hasattr(self, 'quiz_screen'):
-            self.quiz_screen = Screen(name='quiz')
-            self.quiz_screen.add_widget(QuizScreen())
+        # ใช้ CustomScreen แทน Screen
+        self.main_menu_screen = CustomScreen(name='main_menu')
+        self.main_menu_screen.add_widget(MainMenuScreen())
 
-        if not hasattr(self, 'result_screen'):
-            self.result_screen = Screen(name='result')
-            self.result_screen.add_widget(ResultScreen())
+        self.quiz_screen = CustomScreen(name='quiz')
+        self.quiz_screen.add_widget(QuizScreen())
+
+        self.result_screen = CustomScreen(name='result')
+        self.result_screen.add_widget(ResultScreen())
 
         # Add screens to the ScreenManager
         self.screen_manager.add_widget(self.main_menu_screen)
@@ -146,12 +145,11 @@ class QuizApp(App):
         result_screen_widget.update_results(score, time)
         self.screen_manager.current = 'result'
     def change_bg_color(self, color):
+        print("Applying color:", color)
         for screen in self.screen_manager.screens:
-            screen.bg_color = color    
+            screen.bg_color = color     
 
-def change_background_color(self, color):
-    for screen in App.get_running_app().screen_manager.screens:
-        if hasattr(screen, 'bg_color'):
-            screen.bg_color = color            
+      
+
 if __name__ == '__main__':
     QuizApp().run()
