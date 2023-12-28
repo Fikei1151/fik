@@ -15,6 +15,12 @@
 #             on_press: app.quit_app()
 
 <QuizScreen>:
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
     question_label: question
     result_label: result
     BoxLayout:
@@ -42,6 +48,12 @@
             text: f"Time: {root.time_elapsed}"
 
 <ResultScreen>:
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
     score_label: score
     time_label: time
     BoxLayout:
@@ -52,3 +64,10 @@
         Label:
             id: time
             text: ''
+<CustomScreen>:
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        Rectangle:
+            pos: self.pos
+            size: self.size

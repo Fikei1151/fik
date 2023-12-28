@@ -6,6 +6,9 @@ from kivy.properties import ObjectProperty, ListProperty, NumericProperty
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.uix.gridlayout import GridLayout
+
+class CustomScreen(Screen):
+    bg_color = ListProperty([0, 0, 0, 0]) 
 class SettingsPopup(Popup):
     def __init__(self, **kwargs):
         super(SettingsPopup, self).__init__(**kwargs)
@@ -61,7 +64,9 @@ class QuizScreen(BoxLayout):
         {"question": "Who wrote 1984?", "answers": ["Orwell", "Shakespeare", "Tolkien"], "correct": "Orwell"},
         {"question": "Who is create Quiz app?", "answers": ["Fikree", "Fikree handsome", "Fikree handsome and so cool"], "correct": "Fikree handsome and so cool"}
     ])
+    bg_color = ListProperty([0, 0, 0, 0])  # เพิ่ม property นี้
 
+  
     def __init__(self, **kwargs):
         super(QuizScreen, self).__init__(**kwargs)
         self.timer_event = Clock.schedule_interval(self.update_time, 1)
@@ -106,7 +111,9 @@ class QuizScreen(BoxLayout):
 class ResultScreen(BoxLayout):
     score_label = ObjectProperty()
     time_label = ObjectProperty()
-
+    bg_color = ListProperty([0, 0, 0, 0])
+    def __init__(self, **kwargs):
+        super(ResultScreen, self).__init__(**kwargs)
     def update_results(self, score, time):
         self.score_label.text = f"Score: {score}"
         self.time_label.text = f"Time: {time} seconds"
@@ -141,5 +148,10 @@ class QuizApp(App):
     def change_bg_color(self, color):
         for screen in self.screen_manager.screens:
             screen.bg_color = color    
+
+def change_background_color(self, color):
+    for screen in App.get_running_app().screen_manager.screens:
+        if hasattr(screen, 'bg_color'):
+            screen.bg_color = color            
 if __name__ == '__main__':
     QuizApp().run()
