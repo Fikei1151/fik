@@ -17,7 +17,7 @@ class MainMenuScreen(BoxLayout):
         App.get_running_app().screen_manager.current = 'quiz'
 
     def settings(self, instance):
-        # Logic for settings
+        # โลจิกสำหรับการตั้งค่า
         pass
 
     def quit(self, instance):
@@ -74,9 +74,7 @@ class QuizScreen(BoxLayout):
             self.end_quiz()
     def end_quiz(self):
         Clock.unschedule(self.timer_event)
-        app = App.get_running_app()
-        app.show_result(self.score, self.time_elapsed)
-
+        App.get_running_app().end_quiz(self.score, self.time_elapsed)
 
 class ResultScreen(BoxLayout):
     score_label = ObjectProperty()
@@ -89,24 +87,21 @@ class ResultScreen(BoxLayout):
 class QuizApp(App):
     def build(self):
         self.screen_manager = ScreenManager()
+        self.main_menu_screen = Screen(name='main_menu')
+        self.quiz_screen = Screen(name='quiz')
+        self.result_screen = Screen(name='result')
 
-        # Initialize each screen only once
-        if not hasattr(self, 'main_menu_screen'):
-            self.main_menu_screen = Screen(name='main_menu')
-            self.main_menu_screen.add_widget(MainMenuScreen())
+        quiz_screen_widget = QuizScreen()
+        self.quiz_screen.add_widget(quiz_screen_widget)
+        self.result_screen.add_widget(ResultScreen())
 
-        if not hasattr(self, 'quiz_screen'):
-            self.quiz_screen = Screen(name='quiz')
-            self.quiz_screen.add_widget(QuizScreen())
-
-        if not hasattr(self, 'result_screen'):
-            self.result_screen = Screen(name='result')
-            self.result_screen.add_widget(ResultScreen())
-
-        # Add screens to the ScreenManager
         self.screen_manager.add_widget(self.main_menu_screen)
         self.screen_manager.add_widget(self.quiz_screen)
         self.screen_manager.add_widget(self.result_screen)
+        self.main_menu_screen.add_widget(MainMenuScreen())
+        self.screen_manager.add_widget(self.main_menu_screen)
+        # ส่งอ้างอิงไปยัง App ให้ QuizScreen
+        quiz_screen_widget.app = self
 
         return self.screen_manager
 

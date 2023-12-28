@@ -1,6 +1,19 @@
 #:kivy 2.2.1
 # quiz.kv
 
+# <MainMenuScreen>:
+#     BoxLayout:
+#         orientation: 'vertical'
+#         Button:
+#             text: "Quiz"
+#             on_press: app.start_quiz()
+#         Button:
+#             text: "Setting"
+#             on_press: root.toggle_background()
+#         Button:
+#             text: "Quit"
+#             on_press: app.quit_app()
+
 <QuizScreen>:
     question_label: question
     result_label: result
