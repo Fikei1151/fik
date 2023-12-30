@@ -6,7 +6,7 @@ from kivy.properties import ObjectProperty, ListProperty, NumericProperty
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.uix.gridlayout import GridLayout
-
+from kivy.core.audio import SoundLoader
 class CustomScreen(Screen):
     bg_color = ListProperty([0, 0, 0, 0]) 
 class SettingsPopup(Popup):
@@ -67,7 +67,6 @@ class QuizScreen(BoxLayout):
     ])
     bg_color = ListProperty([0, 0, 0, 0])  # เพิ่ม property นี้
 
-  
     def __init__(self, **kwargs):
         super(QuizScreen, self).__init__(**kwargs)
         self.timer_event = Clock.schedule_interval(self.update_time, 1)
@@ -126,7 +125,7 @@ class QuizApp(App):
         # ใช้ CustomScreen แทน Screen
         self.main_menu_screen = CustomScreen(name='main_menu')
         self.main_menu_screen.add_widget(MainMenuScreen())
-
+        self.play_sound('music/intomusicquiz.mp3')
         self.quiz_screen = CustomScreen(name='quiz')
         self.quiz_screen.add_widget(QuizScreen())
 
@@ -149,7 +148,13 @@ class QuizApp(App):
         for screen in self.screen_manager.screens:
             screen.bg_color = color     
 
-      
+    def play_sound(self, sound_file):
+        sound = SoundLoader.load(sound_file)
+        if sound:
+            print("Playing music")
+            sound.volume = 0.5  # ตั้งค่าระดับเสียง (0.0 - 1.0)
+            sound.loop = True  # ถ้าคุณต้องการให้เสียงทำงานวนซ้ำ
+            sound.play()
 
 if __name__ == '__main__':
     QuizApp().run()
