@@ -7,6 +7,8 @@ from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.audio import SoundLoader
+from kivy.uix.slider import Slider
+
 class CustomScreen(Screen):
     bg_color = ListProperty([0, 0, 0, 0]) 
 class SettingsPopup(Popup):
@@ -17,13 +19,21 @@ class SettingsPopup(Popup):
         self.size = (400, 400)
 
         layout = GridLayout(cols=2)
-        colors = [ ("Red", [1, 0, 0, 1]), ("Green", [0, 1, 0, 1]), ("Blue", [0, 0, 1, 1]), ("Yellow", [1, 1, 0, 1])]
+
+        # ตั้งค่าสี
+        colors = [("White", [1, 1, 1, 1]), ("Red", [1, 0, 0, 1]), ("Green", [0, 1, 0, 1]), ("Blue", [0, 0, 1, 1]), ("Yellow", [1, 1, 0, 1])]
         for color_name, color_value in colors:
             btn = Button(text=color_name, on_press=lambda instance, c=color_value: self.change_bg_color(c))
             layout.add_widget(btn)
 
-        self.add_widget(layout)
+        # ตั้งค่าสไลเดอร์สำหรับปรับระดับเสียง
+        volume_slider = Slider(min=0, max=1, value=0.5)
+        volume_slider.bind(value=self.on_volume_change)
+        layout.add_widget(volume_slider)  # สไลเดอร์ถูกเพิ่มลงใน layout
 
+        self.add_widget(layout)
+    def on_volume_change(self, instance, value):
+        App.get_running_app().change_volume(value)
     def change_bg_color(self, color):
         print("Changing color to:", color)  
         App.get_running_app().change_bg_color(color)
@@ -125,7 +135,10 @@ class QuizApp(App):
         # ใช้ CustomScreen แทน Screen
         self.main_menu_screen = CustomScreen(name='main_menu')
         self.main_menu_screen.add_widget(MainMenuScreen())
-        self.play_sound('music/intomusicquiz.mp3')
+        self.sound = SoundLoader.load('music/intomusicquiz.mp3')
+        if self.sound:
+            self.sound.volume = 0.5  # ระดับเสียงเริ่มต้น
+            self.sound.play()
         self.quiz_screen = CustomScreen(name='quiz')
         self.quiz_screen.add_widget(QuizScreen())
 
@@ -149,12 +162,16 @@ class QuizApp(App):
             screen.bg_color = color     
 
     def play_sound(self, sound_file):
-        sound = SoundLoader.load(sound_file)
-        if sound:
-            print("Playing music")
-            sound.volume = 0.5  # ตั้งค่าระดับเสียง (0.0 - 1.0)
-            sound.loop = True  # ถ้าคุณต้องการให้เสียงทำงานวนซ้ำ
-            sound.play()
+        self.sound = SoundLoader.load(sound_file)
+        if self.sound:
+            self.sound.volume = 0.5
+            self.sound.loop = True
+            self.sound.play()
+
+    def change_volume(self, value):
+        # ตั้งค่าระดับเสียงของเพลง
+        if self.sound:
+            self.sound.volume = value       
 
 if __name__ == '__main__':
     QuizApp().run()
