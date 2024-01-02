@@ -30,8 +30,13 @@ class SettingsPopup(Popup):
         volume_slider = Slider(min=0, max=1, value=0.5)
         volume_slider.bind(value=self.on_volume_change)
         layout.add_widget(volume_slider)  # สไลเดอร์ถูกเพิ่มลงใน layout
-
+        mute_button = Button(text='Mute/Unmute', on_press=self.toggle_mute)
+        layout.add_widget(mute_button)
         self.add_widget(layout)
+
+    def toggle_mute(self, instance):
+        # ส่งคำสั่งปิด/เปิดเสียงไปยังฟังก์ชัน mute_sound ของแอป
+        App.get_running_app().mute_sound()    
     def on_volume_change(self, instance, value):
         App.get_running_app().change_volume(value)
     def change_bg_color(self, color):
@@ -129,6 +134,11 @@ class ResultScreen(BoxLayout):
         self.time_label.text = f"Time: {time} seconds"
 
 class QuizApp(App):
+    def __init__(self, **kwargs):
+        super(QuizApp, self).__init__(**kwargs)
+        self.is_muted = False
+        self.previous_volume = 0.5  # ตั้งค่าระดับเสียงเริ่มต้น
+        self.sound = None
     def build(self):
         self.screen_manager = ScreenManager()
 
@@ -137,7 +147,7 @@ class QuizApp(App):
         self.main_menu_screen.add_widget(MainMenuScreen())
         self.sound = SoundLoader.load('music/intomusicquiz.mp3')
         if self.sound:
-            self.sound.volume = 0.5  # ระดับเสียงเริ่มต้น
+            self.sound.volume = self.previous_volume
             self.sound.play()
         self.quiz_screen = CustomScreen(name='quiz')
         self.quiz_screen.add_widget(QuizScreen())
@@ -161,17 +171,26 @@ class QuizApp(App):
         for screen in self.screen_manager.screens:
             screen.bg_color = color     
 
-    def play_sound(self, sound_file):
-        self.sound = SoundLoader.load(sound_file)
-        if self.sound:
-            self.sound.volume = 0.5
-            self.sound.loop = True
-            self.sound.play()
+    # def play_sound(self, sound_file):
+    #     self.sound = SoundLoader.load(sound_file)
+    #     if self.sound:
+    #         self.sound.volume = 0.5
+    #         self.sound.loop = True
+    #         self.sound.play()
 
     def change_volume(self, value):
         # ตั้งค่าระดับเสียงของเพลง
         if self.sound:
-            self.sound.volume = value       
+            self.sound.volume = value   
+    def mute_sound(self):
+        if self.sound:
+            if not self.is_muted:
+                self.previous_volume = self.sound.volume
+                self.sound.volume = 0
+                self.is_muted = True
+            else:
+                self.sound.volume = self.previous_volume
+                self.is_muted = False            
 
 if __name__ == '__main__':
     QuizApp().run()
