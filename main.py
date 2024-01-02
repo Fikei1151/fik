@@ -5,10 +5,11 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import ObjectProperty, ListProperty, NumericProperty
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.audio import SoundLoader
 from kivy.uix.slider import Slider
-
+from kivy.uix.image import Image
 class CustomScreen(Screen):
     bg_color = ListProperty([0, 0, 0, 0]) 
 class SettingsPopup(Popup):
@@ -43,15 +44,18 @@ class SettingsPopup(Popup):
         print("Changing color to:", color)  
         App.get_running_app().change_bg_color(color)
         self.dismiss()
-class MainMenuScreen(BoxLayout):
+class MainMenuScreen(FloatLayout):
     def __init__(self, **kwargs):
         super(MainMenuScreen, self).__init__(**kwargs)
-        self.orientation = 'vertical'
-        self.add_widget(Button(text='Start Quiz', on_press=self.start_quiz))
-        self.add_widget(Button(text='Settings', on_press=self.settings))
-        self.add_widget(Button(text='Quit', on_press=self.quit))
-        self.bg_colors = [('white', [1, 1, 1, 1]), ('blue', [0, 0, 1, 1]), ('green', [0, 1, 0, 1])]
-        self.bg_color_index = 0
+        # Add background image
+        self.add_widget(Image(source='image/QUizbacgroud.jpeg', keep_data=True))
+
+        # Centered BoxLayout for buttons
+        button_layout = BoxLayout(orientation='vertical', size_hint=(0.5, 0.3), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        button_layout.add_widget(Button(text='Start Quiz', on_press=self.start_quiz))
+        button_layout.add_widget(Button(text='Settings', on_press=self.settings))
+        button_layout.add_widget(Button(text='Quit', on_press=self.quit))
+        self.add_widget(button_layout)
 
     def start_quiz(self, instance):
         App.get_running_app().screen_manager.current = 'quiz'
@@ -59,10 +63,6 @@ class MainMenuScreen(BoxLayout):
     def settings(self, instance):
         settings_popup = SettingsPopup()
         settings_popup.open()
-
-    def change_background_color(self, color):
-        for screen in App.get_running_app().screen_manager.screens:
-            screen.bg_color = color
 
     def quit(self, instance):
         App.get_running_app().stop()
