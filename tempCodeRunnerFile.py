@@ -1,55 +1,7 @@
-class QuizScreen(BoxLayout):
-    question_label = ObjectProperty()
-    result_label = ObjectProperty()
-    answer_buttons = ListProperty()
-    current_question_index = NumericProperty(0)
-    score = NumericProperty(0)
-    time_elapsed = NumericProperty(0)
-    questions = ListProperty([
-        {"question": "What is 2 + 2?", "answers": ["3", "4", "5"], "correct": "4"},
-        {"question": "What is the capital of France?", "answers": ["Paris", "London", "Berlin"], "correct": "Paris"},
-        {"question": "Who wrote 1984?", "answers": ["Orwell", "Shakespeare", "Tolkien"], "correct": "Orwell"},
-        {"question": "Who is create Quiz app?", "answers": ["Fikree", "Fikree handsome", "Fikree handsome and so cool"], "correct": "Fikree handsome and so cool"}
-    ])
-    bg_color = ListProperty([0, 0, 0, 0])  # เพิ่ม property นี้
-
-    def __init__(self, **kwargs):
-        super(QuizScreen, self).__init__(**kwargs)
-        self.timer_event = Clock.schedule_interval(self.update_time, 1)
-        self.load_question()  # Load the first question immediately
-
-    def update_time(self, dt):
-        self.time_elapsed += 1
-
-    def on_current_question_index(self, instance, value):
-        if value < len(self.questions):
-            self.load_question()
-        else:
-            self.end_quiz()
-
-    def load_question(self):
-        question = self.questions[self.current_question_index]
-        self.question_label.text = question['question']
-        self.answer_buttons = question['answers']
-
-    def check_answer(self, answer):
-        # ตรวจสอบว่ายังอยู่ในขอบเขตของลิสต์คำถามหรือไม่
-        if self.current_question_index < len(self.questions):
-            correct_answer = self.questions[self.current_question_index]['correct']
-            if answer == correct_answer:
-                self.score += 1
-                self.result_label.text = "Correct!"
-            else:
-                self.result_label.text = "Incorrect! Try again."
-
-            # ขยับไปยังคำถามถัดไปหรือจบควิซ
-            self.current_question_index += 1
-            if self.current_question_index >= len(self.questions):
-                self.end_quiz()
-        else:
-            self.end_quiz()
-    def end_quiz(self):
-        Clock.unschedule(self.timer_event)
-        app = App.get_running_app()
-        app.show_result(self.score, self.time_elapsed)
-
+            {'question': '2+2?', 'answers': ['3', '4', '5'], 'correct': '4'},
+            {'question': 'What is the square root of 16?', 'answers': ['3', '4', '5'], 'correct': '4'},
+            {'question': 'What is 15% of 200?', 'answers': ['30', '15', '25'], 'correct': '30'},
+            {'question': 'What is the sum of angles in a triangle?', 'answers': ['180 degrees', '90 degrees', '360 degrees'], 'correct': '180 degrees'},
+            {'question': 'What is 8 x 7?', 'answers': ['56', '48', '64'], 'correct': '56'},
+            {'question': 'What is 50 divided by 5?', 'answers': ['10', '5', '25'], 'correct': '10'}
+        ]

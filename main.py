@@ -157,7 +157,6 @@ class QuizApp(App):
         self.is_muted = False
         self.previous_volume = 0.5  # ตั้งค่าระดับเสียงเริ่มต้น
         self.sound = None
-        
     def load_questions(self, category):
         # โหลดคำถามตามหมวดหมู่
         if category == 'Math':
@@ -170,21 +169,36 @@ class QuizApp(App):
         # รีเซ็ตและโหลดคำถาม
         self.quiz_screen_instance.current_question_index = 0
         self.quiz_screen_instance.load_question()
-
+        
     def build(self):
         # คำถามสำหรับแต่ละหมวดหมู่
         self.math_questions = [
             {'question': '2+2?', 'answers': ['3', '4', '5'], 'correct': '4'},
-            # คำถามอื่นๆ
+            {'question': 'What is the square root of 16?', 'answers': ['3', '4', '5'], 'correct': '4'},
+            {'question': 'What is 15 divided by 3?', 'answers': ['5', '6', '7'], 'correct': '5'},
+            {'question': 'What is the result of 7 times 6?', 'answers': ['42', '48', '52'], 'correct': '42'},
+            {'question': 'What is 50% of 100?', 'answers': ['50', '60', '40'], 'correct': '50'},
+            {'question': 'What is the next prime number after 7?', 'answers': ['9', '11', '13'], 'correct': '11'}
         ]
+
         self.history_questions = [
             {'question': 'Who was the first president of the USA?', 'answers': ['Washington', 'Lincoln', 'Jefferson'], 'correct': 'Washington'},
-            # คำถามอื่นๆ
+            {'question': 'In which year did World War II end?', 'answers': ['1945', '1946', '1944'], 'correct': '1945'},
+            {'question': 'What was the name of the ship that sank after hitting an iceberg in 1912?', 'answers': ['Titanic', 'Britannic', 'Olympic'], 'correct': 'Titanic'},
+            {'question': 'Who was known as the "Father of Modern Science"?', 'answers': ['Galileo Galilei', 'Isaac Newton', 'Albert Einstein'], 'correct': 'Galileo Galilei'},
+            {'question': 'What ancient civilization built the Pyramids of Giza?', 'answers': ['Egyptians', 'Mayans', 'Aztecs'], 'correct': 'Egyptians'},
+            {'question': 'Who wrote the Declaration of Independence?', 'answers': ['Thomas Jefferson', 'George Washington', 'John Adams'], 'correct': 'Thomas Jefferson'}
         ]
+
         self.physics_questions = [
             {'question': 'What is the speed of light?', 'answers': ['299792458 m/s', '150000000 m/s', 'None'], 'correct': '299792458 m/s'},
-            # คำถามอื่นๆ
+            {'question': 'What is the force that keeps us on the ground called?', 'answers': ['Gravity', 'Magnetism', 'Friction'], 'correct': 'Gravity'},
+            {'question': 'Who discovered the law of universal gravitation?', 'answers': ['Isaac Newton', 'Albert Einstein', 'Galileo Galilei'], 'correct': 'Isaac Newton'},
+            {'question': 'What is the smallest particle of an element called?', 'answers': ['Atom', 'Electron', 'Molecule'], 'correct': 'Atom'},
+            {'question': 'What is the name of the fourth state of matter?', 'answers': ['Plasma', 'Gas', 'Liquid'], 'correct': 'Plasma'},
+            {'question': 'What device is used to measure electric current?', 'answers': ['Ammeter', 'Voltmeter', 'Barometer'], 'correct': 'Ammeter'}
         ]
+
 
         # โหลดเสียง
         self.sound = SoundLoader.load('music/intomusicquiz.mp3')
