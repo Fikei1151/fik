@@ -11,13 +11,20 @@ from kivy.core.audio import SoundLoader
 from kivy.uix.slider import Slider
 from kivy.uix.image import Image
 
-class CategorySelectionScreen(BoxLayout):
+class CategorySelectionScreen(GridLayout):
     def __init__(self, **kwargs):
         super(CategorySelectionScreen, self).__init__(**kwargs)
-        self.orientation = 'vertical'
-        self.add_widget(Button(text='Math', on_press=self.select_category))
-        self.add_widget(Button(text='History', on_press=self.select_category))
-        self.add_widget(Button(text='Physics', on_press=self.select_category))
+        self.cols = 2
+        self.spacing = 10
+        self.padding = [50, 50, 50, 50]
+        self.size_hint = (0.8, 0.6)
+        self.pos_hint = {'center_x': 0.5, 'center_y': 0.5}
+
+        # ปุ่มสำหรับเลือกหมวดหมู่
+        categories = ['Math', 'History', 'Physics', 'Geography', 'Literature', 'Science']
+        for category in categories:
+            btn = Button(text=category, size_hint_y=None, height=60, on_press=self.select_category)
+            self.add_widget(btn)
 
     def select_category(self, instance):
         category = instance.text
@@ -165,6 +172,12 @@ class QuizApp(App):
             self.quiz_screen_instance.questions = self.history_questions
         elif category == 'Physics':
             self.quiz_screen_instance.questions = self.physics_questions
+        elif category == 'Geography':
+            self.quiz_screen_instance.questions = self.geography_questions
+        elif category == 'Literature':
+            self.quiz_screen_instance.questions = self.literature_questions
+        elif category == 'Science':
+            self.quiz_screen_instance.questions = self.science_questions
 
         # รีเซ็ตและโหลดคำถาม
         self.quiz_screen_instance.current_question_index = 0
@@ -197,6 +210,29 @@ class QuizApp(App):
             {'question': 'What is the smallest particle of an element called?', 'answers': ['Atom', 'Electron', 'Molecule'], 'correct': 'Atom'},
             {'question': 'What is the name of the fourth state of matter?', 'answers': ['Plasma', 'Gas', 'Liquid'], 'correct': 'Plasma'},
             {'question': 'What device is used to measure electric current?', 'answers': ['Ammeter', 'Voltmeter', 'Barometer'], 'correct': 'Ammeter'}
+        ]
+        self.geography_questions = [
+            {'question': 'What is the largest continent?', 'answers': ['Africa', 'Asia', 'Europe'], 'correct': 'Asia'},
+            {'question': 'What river is the longest in the world?', 'answers': ['Nile', 'Amazon', 'Yangtze'], 'correct': 'Nile'},
+            {'question': 'In which country is the Sahara Desert primarily located?', 'answers': ['Egypt', 'Morocco', 'Chad'], 'correct': 'Egypt'},
+            {'question': 'Which is the smallest country in the world?', 'answers': ['Vatican City', 'Monaco', 'Nauru'], 'correct': 'Vatican City'},
+            {'question': 'Which country has the most natural lakes?', 'answers': ['Canada', 'USA', 'Russia'], 'correct': 'Canada'}
+        ]
+
+        self.literature_questions = [
+            {'question': 'Who wrote "Romeo and Juliet"?', 'answers': ['William Shakespeare', 'Charles Dickens', 'Leo Tolstoy'], 'correct': 'William Shakespeare'},
+            {'question': 'What is the oldest known literary work?', 'answers': ['The Epic of Gilgamesh', 'The Iliad', 'Beowulf'], 'correct': 'The Epic of Gilgamesh'},
+            {'question': 'In "Harry Potter", what is the name of Harry\'s owl?', 'answers': ['Hedwig', 'Errol', 'Crookshanks'], 'correct': 'Hedwig'},
+            {'question': 'Who wrote "The Great Gatsby"?', 'answers': ['F. Scott Fitzgerald', 'Ernest Hemingway', 'John Steinbeck'], 'correct': 'F. Scott Fitzgerald'},
+            {'question': 'What is the main theme of "To Kill a Mockingbird"?', 'answers': ['Racism', 'War', 'Love'], 'correct': 'Racism'}
+        ]
+
+        self.science_questions = [
+            {'question': 'What element does "O" represent on the periodic table?', 'answers': ['Oxygen', 'Osmium', 'Gold'], 'correct': 'Oxygen'},
+            {'question': 'Who is known as the father of modern physics?', 'answers': ['Albert Einstein', 'Isaac Newton', 'Niels Bohr'], 'correct': 'Albert Einstein'},
+            {'question': 'What is the powerhouse of the cell?', 'answers': ['Mitochondria', 'Nucleus', 'Ribosome'], 'correct': 'Mitochondria'},
+            {'question': 'What is the study of fungi called?', 'answers': ['Mycology', 'Botany', 'Zoology'], 'correct': 'Mycology'},
+            {'question': 'Which planet is known as the Red Planet?', 'answers': ['Mars', 'Jupiter', 'Saturn'], 'correct': 'Mars'}
         ]
 
 
