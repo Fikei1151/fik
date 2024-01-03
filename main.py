@@ -10,6 +10,21 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.core.audio import SoundLoader
 from kivy.uix.slider import Slider
 from kivy.uix.image import Image
+
+class CategorySelectionScreen(BoxLayout):
+    def __init__(self, **kwargs):
+        super(CategorySelectionScreen, self).__init__(**kwargs)
+        self.orientation = 'vertical'
+        self.add_widget(Button(text='Math', on_press=self.select_category))
+        self.add_widget(Button(text='History', on_press=self.select_category))
+        self.add_widget(Button(text='Physics', on_press=self.select_category))
+
+    def select_category(self, instance):
+        category = instance.text
+        app = App.get_running_app()
+        app.load_questions(category)
+        app.screen_manager.current = 'quiz'
+
 class CustomScreen(Screen):
     bg_color = ListProperty([0, 0, 0, 0]) 
 class SettingsPopup(Popup):
@@ -58,7 +73,7 @@ class MainMenuScreen(FloatLayout):
         self.add_widget(button_layout)
 
     def start_quiz(self, instance):
-        App.get_running_app().screen_manager.current = 'quiz'
+        App.get_running_app().screen_manager.current = 'category_selection'
 
     def settings(self, instance):
         settings_popup = SettingsPopup()
@@ -81,7 +96,10 @@ class QuizScreen(BoxLayout):
         {"question": "Who is create Quiz app?", "answers": ["Fikree", "Fikree handsome", "Fikree handsome and so cool"], "correct": "Fikree handsome and so cool"}
     ])
     bg_color = ListProperty([0, 0, 0, 0])  # เพิ่ม property นี้
-
+    def on_questions(self, instance, value):
+        # รีเซ็ตคำถามเมื่อมีการเปลี่ยนแปลงรายการคำถาม
+        self.current_question_index = 0
+        self.load_question()
     def __init__(self, **kwargs):
         super(QuizScreen, self).__init__(**kwargs)
         self.timer_event = Clock.schedule_interval(self.update_time, 1)
@@ -139,24 +157,60 @@ class QuizApp(App):
         self.is_muted = False
         self.previous_volume = 0.5  # ตั้งค่าระดับเสียงเริ่มต้น
         self.sound = None
-    def build(self):
-        self.screen_manager = ScreenManager()
+        
+    def load_questions(self, category):
+        # โหลดคำถามตามหมวดหมู่
+        if category == 'Math':
+            self.quiz_screen_instance.questions = self.math_questions
+        elif category == 'History':
+            self.quiz_screen_instance.questions = self.history_questions
+        elif category == 'Physics':
+            self.quiz_screen_instance.questions = self.physics_questions
 
-        # ใช้ CustomScreen แทน Screen
-        self.main_menu_screen = CustomScreen(name='main_menu')
-        self.main_menu_screen.add_widget(MainMenuScreen())
+        # รีเซ็ตและโหลดคำถาม
+        self.quiz_screen_instance.current_question_index = 0
+        self.quiz_screen_instance.load_question()
+
+    def build(self):
+        # คำถามสำหรับแต่ละหมวดหมู่
+        self.math_questions = [
+            {'question': '2+2?', 'answers': ['3', '4', '5'], 'correct': '4'},
+            # คำถามอื่นๆ
+        ]
+        self.history_questions = [
+            {'question': 'Who was the first president of the USA?', 'answers': ['Washington', 'Lincoln', 'Jefferson'], 'correct': 'Washington'},
+            # คำถามอื่นๆ
+        ]
+        self.physics_questions = [
+            {'question': 'What is the speed of light?', 'answers': ['299792458 m/s', '150000000 m/s', 'None'], 'correct': '299792458 m/s'},
+            # คำถามอื่นๆ
+        ]
+
+        # โหลดเสียง
         self.sound = SoundLoader.load('music/intomusicquiz.mp3')
         if self.sound:
             self.sound.volume = self.previous_volume
             self.sound.play()
+
+        # สร้าง ScreenManager และหน้าจอต่างๆ
+        self.screen_manager = ScreenManager()
+        self.main_menu_screen = CustomScreen(name='main_menu')
+        self.main_menu_screen.add_widget(MainMenuScreen())
+
+        # สร้างและเก็บอินสแตนซ์ของ QuizScreen
+        self.quiz_screen_instance = QuizScreen()
         self.quiz_screen = CustomScreen(name='quiz')
-        self.quiz_screen.add_widget(QuizScreen())
+        self.quiz_screen.add_widget(self.quiz_screen_instance)
+
+        self.category_screen = CustomScreen(name='category_selection')
+        self.category_screen.add_widget(CategorySelectionScreen())
 
         self.result_screen = CustomScreen(name='result')
         self.result_screen.add_widget(ResultScreen())
 
-        # Add screens to the ScreenManager
+        # เพิ่มหน้าจอลงใน ScreenManager
         self.screen_manager.add_widget(self.main_menu_screen)
+        self.screen_manager.add_widget(self.category_screen)
         self.screen_manager.add_widget(self.quiz_screen)
         self.screen_manager.add_widget(self.result_screen)
 
