@@ -275,13 +275,6 @@ class QuizApp(App):
         for screen in self.screen_manager.screens:
             screen.bg_color = color     
 
-    # def play_sound(self, sound_file):
-    #     self.sound = SoundLoader.load(sound_file)
-    #     if self.sound:
-    #         self.sound.volume = 0.5
-    #         self.sound.loop = True
-    #         self.sound.play()
-
     def change_volume(self, value):
         # ตั้งค่าระดับเสียงของเพลง
         if self.sound:
