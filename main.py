@@ -234,7 +234,13 @@ class QuizApp(App):
             {'question': 'What river is the longest in the world?', 'answers': ['Nile', 'Amazon', 'Yangtze'], 'correct': 'Nile'},
             {'question': 'In which country is the Sahara Desert primarily located?', 'answers': ['Egypt', 'Morocco', 'Chad'], 'correct': 'Egypt'},
             {'question': 'Which is the smallest country in the world?', 'answers': ['Vatican City', 'Monaco', 'Nauru'], 'correct': 'Vatican City'},
-            {'question': 'Which country has the most natural lakes?', 'answers': ['Canada', 'USA', 'Russia'], 'correct': 'Canada'}
+            {'question': 'Which country has the most natural lakes?', 'answers': ['Canada', 'USA', 'Russia'], 'correct': 'Canada'},
+            {'question': 'What is the capital city of Japan?', 'answers': ['Kyoto', 'Osaka', 'Tokyo'], 'correct': 'Tokyo'},
+            {'question': 'Which river flows through Paris?', 'answers': ['Seine', 'Thames', 'Danube'], 'correct': 'Seine'},
+            {'question': 'What is the highest mountain in the world?', 'answers': ['K2', 'Everest', 'Kilimanjaro'], 'correct': 'Everest'},
+            {'question': 'Which country is known as the Land of the Rising Sun?', 'answers': ['China', 'Japan', 'Korea'], 'correct': 'Japan'},
+            {'question': 'What is the longest river in Africa?', 'answers': ['Nile', 'Congo', 'Niger'], 'correct': 'Nile'}
+
         ]
 
         self.literature_questions = [
