@@ -215,7 +215,13 @@ class QuizApp(App):
             {'question': 'Who discovered the law of universal gravitation?', 'answers': ['Isaac Newton', 'Albert Einstein', 'Galileo Galilei'], 'correct': 'Isaac Newton'},
             {'question': 'What is the smallest particle of an element called?', 'answers': ['Atom', 'Electron', 'Molecule'], 'correct': 'Atom'},
             {'question': 'What is the name of the fourth state of matter?', 'answers': ['Plasma', 'Gas', 'Liquid'], 'correct': 'Plasma'},
-            {'question': 'What device is used to measure electric current?', 'answers': ['Ammeter', 'Voltmeter', 'Barometer'], 'correct': 'Ammeter'}
+            {'question': 'What device is used to measure electric current?', 'answers': ['Ammeter', 'Voltmeter', 'Barometer'], 'correct': 'Ammeter'},
+            {'question': 'What principle explains why ships float?', 'answers': ['Archimedes\' Principle', 'Newton\'s Third Law', 'Bernoulli\'s Principle'], 'correct': 'Archimedes\' Principle'},
+            {'question': 'What particle is known as the "God Particle"?', 'answers': ['Electron', 'Neutron', 'Higgs Boson'], 'correct': 'Higgs Boson'},
+            {'question': 'Who is the scientist famous for his theory of relativity?', 'answers': ['Isaac Newton', 'Albert Einstein', 'Niels Bohr'], 'correct': 'Albert Einstein'},
+            {'question': 'What is the unit of frequency?', 'answers': ['Hertz', 'Watt', 'Newton'], 'correct': 'Hertz'},
+            {'question': 'What phenomenon causes the Northern Lights?', 'answers': ['Solar Wind', 'Lunar Reflection', 'Earthquake'], 'correct': 'Solar Wind'}
+
         ]
         self.geography_questions = [
             {'question': 'What is the largest continent?', 'answers': ['Africa', 'Asia', 'Europe'], 'correct': 'Asia'},
