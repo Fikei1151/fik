@@ -206,7 +206,13 @@ class QuizApp(App):
             {'question': 'What was the name of the ship that sank after hitting an iceberg in 1912?', 'answers': ['Titanic', 'Britannic', 'Olympic'], 'correct': 'Titanic'},
             {'question': 'Who was known as the "Father of Modern Science"?', 'answers': ['Galileo Galilei', 'Isaac Newton', 'Albert Einstein'], 'correct': 'Galileo Galilei'},
             {'question': 'What ancient civilization built the Pyramids of Giza?', 'answers': ['Egyptians', 'Mayans', 'Aztecs'], 'correct': 'Egyptians'},
-            {'question': 'Who wrote the Declaration of Independence?', 'answers': ['Thomas Jefferson', 'George Washington', 'John Adams'], 'correct': 'Thomas Jefferson'}
+            {'question': 'Who wrote the Declaration of Independence?', 'answers': ['Thomas Jefferson', 'George Washington', 'John Adams'], 'correct': 'Thomas Jefferson'},
+            {'question': 'Which empire was ruled by Alexander the Great?', 'answers': ['Roman', 'Persian', 'Macedonian'], 'correct': 'Macedonian'},
+            {'question': 'In which year did the Berlin Wall fall?', 'answers': ['1989', '1991', '1987'], 'correct': '1989'},
+            {'question': 'What was the main cause of the French Revolution?', 'answers': ['Economic Crisis', 'Religious Conflict', 'Foreign Invasion'], 'correct': 'Economic Crisis'},
+            {'question': 'Who was the Egyptian queen famous for her beauty and affair with Mark Antony?', 'answers': ['Nefertiti', 'Cleopatra', 'Hatshepsut'], 'correct': 'Cleopatra'},
+            {'question': 'What was the original name of New York City?', 'answers': ['New Amsterdam', 'New England', 'New Jersey'], 'correct': 'New Amsterdam'}
+
         ]
 
         self.physics_questions = [
@@ -236,7 +242,13 @@ class QuizApp(App):
             {'question': 'What is the oldest known literary work?', 'answers': ['The Epic of Gilgamesh', 'The Iliad', 'Beowulf'], 'correct': 'The Epic of Gilgamesh'},
             {'question': 'In "Harry Potter", what is the name of Harry\'s owl?', 'answers': ['Hedwig', 'Errol', 'Crookshanks'], 'correct': 'Hedwig'},
             {'question': 'Who wrote "The Great Gatsby"?', 'answers': ['F. Scott Fitzgerald', 'Ernest Hemingway', 'John Steinbeck'], 'correct': 'F. Scott Fitzgerald'},
-            {'question': 'What is the main theme of "To Kill a Mockingbird"?', 'answers': ['Racism', 'War', 'Love'], 'correct': 'Racism'}
+            {'question': 'What is the main theme of "To Kill a Mockingbird"?', 'answers': ['Racism', 'War', 'Love'], 'correct': 'Racism'},
+            {'question': 'Who wrote "Pride and Prejudice"?', 'answers': ['Jane Austen', 'Emily Bronte', 'Virginia Woolf'], 'correct': 'Jane Austen'},
+            {'question': 'Which novel features the character Atticus Finch?', 'answers': ['To Kill a Mockingbird', 'The Great Gatsby', '1984'], 'correct': 'To Kill a Mockingbird'},
+            {'question': 'What is the longest epic poem in world literature?', 'answers': ['Mahabharata', 'Odyssey', 'Iliad'], 'correct': 'Mahabharata'},
+            {'question': 'Who is the author of "The Hobbit"?', 'answers': ['J.R.R. Tolkien', 'C.S. Lewis', 'J.K. Rowling'], 'correct': 'J.R.R. Tolkien'},
+            {'question': 'What is the main setting of the "Harry Potter" series?', 'answers': ['Hogwarts', 'Narnia', 'Middle Earth'], 'correct': 'Hogwarts'}
+
         ]
 
         self.science_questions = [
