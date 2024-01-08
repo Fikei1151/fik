@@ -191,7 +191,13 @@ class QuizApp(App):
             {'question': 'What is 15 divided by 3?', 'answers': ['5', '6', '7'], 'correct': '5'},
             {'question': 'What is the result of 7 times 6?', 'answers': ['42', '48', '52'], 'correct': '42'},
             {'question': 'What is 50% of 100?', 'answers': ['50', '60', '40'], 'correct': '50'},
-            {'question': 'What is the next prime number after 7?', 'answers': ['9', '11', '13'], 'correct': '11'}
+            {'question': 'What is the next prime number after 7?', 'answers': ['9', '11', '13'], 'correct': '11'},
+            {'question': 'What is the value of x in the equation 3x + 2 = 11?', 'answers': ['2', '3', '4'], 'correct': '3'},
+            {'question': 'What is the perimeter of a rectangle with a length of 10 and width of 5?', 'answers': ['30', '15', '25'], 'correct': '30'},
+            {'question': 'What is the area of a circle with a radius of 7?', 'answers': ['154', '147', '138'], 'correct': '154'},
+            {'question': 'How many sides does a hexagon have?', 'answers': ['5', '6', '7'], 'correct': '6'},
+            {'question': 'What is the product of 12 and 8?', 'answers': ['96', '88', '100'], 'correct': '96'}
+
         ]
 
         self.history_questions = [
