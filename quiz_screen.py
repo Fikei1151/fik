@@ -64,21 +64,30 @@ class QuizScreen(BoxLayout):
 class ResultScreen(BoxLayout):
     score_label = ObjectProperty()
     time_label = ObjectProperty()
-    custom_message_label = ObjectProperty()  # Add a new label for custom message
+    custom_message_label = ObjectProperty()
     bg_color = ListProperty([0, 0, 0, 0])
 
     def __init__(self, **kwargs):
         super(ResultScreen, self).__init__(**kwargs)
+        self.orientation = 'vertical'  # Set the orientation of BoxLayout
+        self.spacing = 10  # Add spacing between widgets
+        self.padding = [10, 10, 10, 10]  # Add padding around the layout
+
         self.custom_message_label = Label()
         self.add_widget(self.custom_message_label)
 
-        # Add Quit button
-        quit_button = Button(text="Quit", on_press=self.quit_app)
-        self.add_widget(quit_button)
+        # Add buttons to the layout
+        self.quit_button = Button(text="Quit", on_press=self.quit_app)
+        self.add_widget(self.quit_button)
+
+        self.back_to_main_menu_button = Button(text="Back to Main Menu", on_press=self.back_to_main_menu)
+        self.add_widget(self.back_to_main_menu_button)
 
     def quit_app(self, instance):
-        # Function to quit the app
         App.get_running_app().stop()
+
+    def back_to_main_menu(self, instance):
+        App.get_running_app().screen_manager.current = 'main_menu'
 
     def update_results(self, score, time):
         self.score_label.text = f"Score: {score}"
