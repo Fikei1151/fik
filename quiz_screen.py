@@ -4,6 +4,7 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import ObjectProperty, ListProperty, NumericProperty
 from kivy.clock import Clock
+from kivy.uix.label import Label 
 
 class QuizScreen(BoxLayout):
     question_label = ObjectProperty()
@@ -66,9 +67,20 @@ class QuizScreen(BoxLayout):
 class ResultScreen(BoxLayout):
     score_label = ObjectProperty()
     time_label = ObjectProperty()
+    custom_message_label = ObjectProperty()  # Add a new label for custom message
     bg_color = ListProperty([0, 0, 0, 0])
+
     def __init__(self, **kwargs):
         super(ResultScreen, self).__init__(**kwargs)
+        # Add the custom message label to the layout
+        self.custom_message_label = Label()
+        self.add_widget(self.custom_message_label)
+
     def update_results(self, score, time):
         self.score_label.text = f"Score: {score}"
         self.time_label.text = f"Time: {time} seconds"
+        # Update the custom message based on the score
+        if score >= 5:
+            self.custom_message_label.text = "Great job!"
+        else:
+            self.custom_message_label.text = "Needs improvement!"
