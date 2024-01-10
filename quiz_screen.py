@@ -15,9 +15,7 @@ class QuizScreen(BoxLayout):
     time_elapsed = NumericProperty(0)
     questions = ListProperty([
         {"question": "What is 2 + 2?", "answers": ["3", "4", "5"], "correct": "4"},
-        {"question": "What is the capital of France?", "answers": ["Paris", "London", "Berlin"], "correct": "Paris"},
-        {"question": "Who wrote 1984?", "answers": ["Orwell", "Shakespeare", "Tolkien"], "correct": "Orwell"},
-        {"question": "Who is create Quiz app?", "answers": ["Fikree", "Fikree handsome", "Fikree handsome and so cool"], "correct": "Fikree handsome and so cool"}
+        {"question": "What is the capital of France?", "answers": ["Paris", "London", "Berlin"], "correct": "Paris"}
     ])
     bg_color = ListProperty([0, 0, 0, 0])  # เพิ่ม property นี้
     def on_questions(self, instance, value):
