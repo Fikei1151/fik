@@ -11,6 +11,7 @@ from kivy.core.audio import SoundLoader
 from kivy.uix.slider import Slider
 from kivy.uix.image import Image
 from quiz_screen import QuizScreen
+from quiz_screen import ResultScreen
 class CategorySelectionScreen(GridLayout):
     def __init__(self, **kwargs):
         super(CategorySelectionScreen, self).__init__(**kwargs)
@@ -88,18 +89,6 @@ class MainMenuScreen(FloatLayout):
 
     def quit(self, instance):
         App.get_running_app().stop()
-
-
-
-class ResultScreen(BoxLayout):
-    score_label = ObjectProperty()
-    time_label = ObjectProperty()
-    bg_color = ListProperty([0, 0, 0, 0])
-    def __init__(self, **kwargs):
-        super(ResultScreen, self).__init__(**kwargs)
-    def update_results(self, score, time):
-        self.score_label.text = f"Score: {score}"
-        self.time_label.text = f"Time: {time} seconds"
 
 class QuizApp(App):
     def __init__(self, **kwargs):

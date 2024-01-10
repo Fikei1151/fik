@@ -62,3 +62,13 @@ class QuizScreen(BoxLayout):
         Clock.unschedule(self.timer_event)
         app = App.get_running_app()
         app.show_result(self.score, self.time_elapsed)
+
+class ResultScreen(BoxLayout):
+    score_label = ObjectProperty()
+    time_label = ObjectProperty()
+    bg_color = ListProperty([0, 0, 0, 0])
+    def __init__(self, **kwargs):
+        super(ResultScreen, self).__init__(**kwargs)
+    def update_results(self, score, time):
+        self.score_label.text = f"Score: {score}"
+        self.time_label.text = f"Time: {time} seconds"
