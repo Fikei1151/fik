@@ -61,7 +61,6 @@ class QuizScreen(BoxLayout):
         Clock.unschedule(self.timer_event)
         app = App.get_running_app()
         app.show_result(self.score, self.time_elapsed)
-
 class ResultScreen(BoxLayout):
     score_label = ObjectProperty()
     time_label = ObjectProperty()
@@ -70,16 +69,21 @@ class ResultScreen(BoxLayout):
 
     def __init__(self, **kwargs):
         super(ResultScreen, self).__init__(**kwargs)
-        # Add the custom message label to the layout
         self.custom_message_label = Label()
         self.add_widget(self.custom_message_label)
+
+        # Add Quit button
+        quit_button = Button(text="Quit", on_press=self.quit_app)
+        self.add_widget(quit_button)
+
+    def quit_app(self, instance):
+        # Function to quit the app
+        App.get_running_app().stop()
 
     def update_results(self, score, time):
         self.score_label.text = f"Score: {score}"
         self.time_label.text = f"Time: {time} seconds"
-        # Update the custom message based on the score
         if score >= 5:
             self.custom_message_label.text = "Great job!"
-
         else:
             self.custom_message_label.text = "Needs improvement!"
