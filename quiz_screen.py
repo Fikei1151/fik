@@ -80,5 +80,6 @@ class ResultScreen(BoxLayout):
         # Update the custom message based on the score
         if score >= 5:
             self.custom_message_label.text = "Great job!"
+
         else:
             self.custom_message_label.text = "Needs improvement!"

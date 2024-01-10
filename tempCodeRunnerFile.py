@@ -1,0 +1,1 @@
+from kivy.uix.image import Image
